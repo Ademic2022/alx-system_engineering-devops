@@ -19,3 +19,9 @@ load balancer on to manage both web servers.
   installs and configures HAproxy version 1.5 on a server.
     * Enables management via the init script.
     * Requests are distributed using a round-robin algorithm.
+
+* **2. Added a custom HTTP header with Puppet
+  I’d like you to automate the task of creating a custom HTTP header response, but with Puppet.
+  * [2-puppet_custom_http_response_header.pp](./2-puppet_custom_http_response_header.pp): 2-puppet_custom_http_response_header.pp with puppet that configures a brand new Ubuntu machine to the requirements asked in this task
+  * Named the custom HTTP header 'X-Served-By'
+  * The value of the custom HTTP header is the hostname of the server Nginx is running on
