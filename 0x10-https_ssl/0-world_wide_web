@@ -1,0 +1,24 @@
+#!/bin/bash
+
+domain=$1
+subdomain=$2
+
+# Function to display information about a subdomain
+get_subdomain_info() {
+    subdomain=$1
+    dig_output=$(dig $subdomain.$domain +short)
+    record_type=$(echo $dig_output | awk '{print $2}')
+    destination=$(echo $dig_output | awk '{print $1}')
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+# If only domain is provided, display information for all subdomains
+if [ -z "$subdomain" ]; then
+    get_subdomain_info www
+    get_subdomain_info lb-01
+    get_subdomain_info web-01
+    get_subdomain_info web-02
+else
+    # If both domain and subdomain are provided, display information for the specified subdomain
+    get_subdomain_info $subdomain
+fi
