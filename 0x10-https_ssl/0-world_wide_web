@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Takes a subdomain and a domain and returns information about the subdomain
 
 domain=$1
 subdomain=$2
