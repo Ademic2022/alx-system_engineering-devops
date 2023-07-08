@@ -34,7 +34,7 @@ defaults
         errorfile 504 /etc/haproxy/errors/504.http
 
 frontend ademictech.tech
-        bind 0:80
+        bind *:80
         default_backend ademictech.tech_backend
 
 frontend  ademictech.tech-https-frontend
