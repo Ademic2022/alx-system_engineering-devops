@@ -1,5 +1,3 @@
-Web stack debugging #2
-
 # Project Title: Web stack debugging #2
 
 ## Task 0: Run Software as Another User
