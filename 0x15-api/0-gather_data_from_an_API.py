@@ -14,7 +14,8 @@ def get_todo_list_progress(employee_id):
         employee_id (int): The ID of the employee.
 
     Returns:
-        tuple: A tuple containing the name of the employee, number of completed tasks,
+        tuple: A tuple containing the name of the employee,
+        number of completed tasks,
                total number of tasks, and a list of completed tasks.
     """
     url = "https://jsonplaceholder.typicode.com/"
