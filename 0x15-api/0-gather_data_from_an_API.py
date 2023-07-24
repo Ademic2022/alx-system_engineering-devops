@@ -1,10 +1,22 @@
 #!/usr/bin/python3
-"""Returns to-do list information for a given employee ID."""
+"""
+Returns to-do list information for a given employee ID.
+"""
 import requests
 import sys
 
 
 def get_todo_list_progress(employee_id):
+    """
+    Fetches the TODO list progress for a given employee ID.
+
+    Args:
+        employee_id (int): The ID of the employee.
+
+    Returns:
+        tuple: A tuple containing the name of the employee, number of completed tasks,
+               total number of tasks, and a list of completed tasks.
+    """
     url = "https://jsonplaceholder.typicode.com/"
     user = requests.get(url + "users/{}".format(employee_id)).json()
     todos = requests.get(url + "todos", params={"userId": employee_id}).json()
