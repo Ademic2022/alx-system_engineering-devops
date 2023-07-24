@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Returns to-do list information for a given employee ID."""
-
 import requests
 import sys
+
 
 def get_todo_list_progress(employee_id):
     url = "https://jsonplaceholder.typicode.com/"
@@ -11,6 +11,7 @@ def get_todo_list_progress(employee_id):
 
     completed = [t.get("title") for t in todos if t.get("completed") is True]
     return user.get("name"), len(completed), len(todos), completed
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -23,3 +24,4 @@ if __name__ == "__main__":
     print("Employee {} is done with tasks({}/{}):".format(name, num_completed, total_tasks))
     for task in completed_tasks:
         print("\t" + task)
+
