@@ -86,19 +86,23 @@ mysql> FLUSH PRIVILEGES;
 
 ```mysql
 
-mysql> CREATE DATABASE db_name_;
+mysql> CREATE DATABASE tyrell_corp;
 
 -- To verify if db is created
 mysql> SHOW DATABASES;
 
-mysql> USE db_name;
+mysql> USE tyrell_corp;
 
-mysql> CREATE TABLE table_name (
-    -> col_1 data_type,
-    -> col_2 data_type);
+mysql> CREATE TABLE nexus6 (
+   id INT AUTO_INCREMENT PRIMARY KEY,
+   name VARCHAR(255) NOT NULL
+);
 -- continue adding more coloums to your taste for me i just added two coloumns
 
-mysql> INSERT INTO table_name VALUES (val_1, val_2);
+mysql> INSERT INTO nexus6 (name) VALUES ('Leon');
+
+GRANT SELECT ON tyrell_corp.nexus6 TO 'holberton_user'@'localhost';
+FLUSH PRIVILEGES;
 
 -- Verify if data was added succesfully do
 mysql> SELECT col_1, col_2 FROM tb_name;
