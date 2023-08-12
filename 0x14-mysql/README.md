@@ -72,7 +72,7 @@ $ sudo apt-get install -f mysql-client=5.7* mysql-community-server=5.7* mysql-se
 
 ### Creating a user and Granting Priviledges in mysql
 ```mysql
-$ mysql -root -p
+$ mysql -uroot -p
 Password:	/* Type root password
 
 mysql> CREATE USER 'holberton_user'@'localhost' IDENTIFIED BY 'projectcorrection280hbtn';
