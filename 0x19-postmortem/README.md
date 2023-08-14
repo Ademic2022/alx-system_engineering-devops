@@ -1,65 +1,33 @@
 # Postmortem
 
-Upon the release of ALX's System Engineering & DevOps project 0x19,
-approximately 06:00 West African Time (WAT) here in Nigeria, an outage occurred on an isolated
-Ubuntu 14.04 container running an Apache web server. GET requests on the server led to
-`500 Internal Server Error`'s, when the expected response was an HTML file defining a
-simple Holberton WordPress site.
+**Incident Analysis**
 
-## Debugging Process
+During the release of ALX's System Engineering & DevOps project (version 0x19) in Nigeria at around 06:00 West African Time (WAT), an outage took place on a separate Ubuntu 14.04 container running an Apache web server. Instead of the expected response of a simple Holberton WordPress site in HTML format, GET requests on the server resulted in 500 Internal Server Errors.
 
-Bug debugger Brennan (BDB... as in my actual initials... made that up on the spot, pretty
-good, huh?) encountered the issue upon opening the project and being, well, instructed to
-address it, roughly 19:20 PST. He promptly proceeded to undergo solving the problem.
+**Debugging Process**
 
-1. Checked running processes using `ps aux`. Two `apache2` processes - `root` and `www-data` -
-were properly running.
+Our bug debugger, Brennan, addressed the issue soon after it was identified, around 19:20 PST. Here's how the debugging process unfolded:
 
-2. Looked in the `sites-available` folder of the `/etc/apache2/` directory. Determined that
-the web server was serving content located in `/var/www/html/`.
+1. Brennan checked the running processes using "ps aux" and found that two Apache2 processes, one for root and one for www-data, were functioning properly.
+2. He examined the sites-available folder in the /etc/apache2/ directory and confirmed that the web server was serving content from /var/www/html/.
+3. Brennan initiated the "strace" command on the PID of the root Apache process in one terminal while performing a "curl" on the server in another. Unfortunately, the "strace" command did not yield useful information.
+4. He repeated the previous step, but this time on the PID of the www-data process. This time, the "strace" output revealed an error (-1 ENOENT) indicating that an attempt was made to access the file /var/www/html/wp-includes/class-wp-locale.phpp.
+5. Brennan examined the files in the /var/www/html/ directory one by one, using Vim pattern matching to identify the erroneous ".phpp" file extension. He found the issue in the wp-settings.php file (Line 137, require_once( ABSPATH . WPINC . '/class-wp-locale.phpp' );).
+6. He removed the trailing "p" from the identified line.
+7. A successful "curl" test on the server confirmed that the issue was resolved.
+8. Brennan created a Puppet manifest to automate the correction of this error in the future.
 
-3. In one terminal, ran `strace` on the PID of the `root` Apache process. In another, curled
-the server. Expected great things... only to be disappointed. `strace` gave no useful
-information.
+**Summary**
 
-4. Repeated step 3, except on the PID of the `www-data` process. Kept expectations lower this
-time... but was rewarded! `strace` revelead an `-1 ENOENT (No such file or directory)` error
-occurring upon an attempt to access the file `/var/www/html/wp-includes/class-wp-locale.phpp`.
+In summary, the root cause of the issue was a simple typo in the WordPress app. The error occurred in the wp-settings.php file when trying to load the file "class-wp-locale.phpp." The correct file name, located in the wp-content directory of the application, should have been "class-wp-locale.php." The patch involved a straightforward fix by removing the trailing "p."
 
-5. Looked through files in the `/var/www/html/` directory one-by-one, using Vim pattern
-matching to try and locate the erroneous `.phpp` file extension. Located it in the
-`wp-settings.php` file. (Line 137, `require_once( ABSPATH . WPINC . '/class-wp-locale.php' );`).
+**Preventive Measures**
 
-6. Removed the trailing `p` from the line.
+To prevent similar outages in the future, we recommend the following steps:
 
-7. Tested another `curl` on the server. 200 A-ok!
+1. Thorough Testing: Ensure rigorous testing of the application before deployment to catch such errors early in the process.
+2. Status Monitoring: Implement an uptime-monitoring service like UptimeRobot to provide instant alerts in the event of website outages.
 
-8. Wrote a Puppet manifest to automate fixing of the error.
+Additionally, a Puppet manifest named "0-strace_is_your_friend.pp" was created in response to this error. This manifest automates the correction of any identical errors that might occur in the future by replacing "phpp" extensions in the file /var/www/html/wp-settings.php with "php."
 
-## Summation
-
-In short, a typo. Gotta love'em. In full, the WordPress app was encountering a critical
-error in `wp-settings.php` when tyring to load the file `class-wp-locale.phpp`. The correct
-file name, located in the `wp-content` directory of the application folder, was
-`class-wp-locale.php`.
-
-Patch involved a simple fix on the typo, removing the trailing `p`.
-
-## Prevention
-
-This outage was not a web server error, but an application error. To prevent such outages
-moving forward, please keep the following in mind.
-
-* Test! Test test test. Test the application before deploying. This error would have arisen
-and could have been addressed earlier had the app been tested.
-
-* Status monitoring. Enable some uptime-monitoring service such as
-[UptimeRobot](./https://uptimerobot.com/) to alert instantly upon outage of the website.
-
-Note that in response to this error, I wrote a Puppet manifest
-[0-strace_is_your_friend.pp](https://github.com/bdbaraban/holberton-system_engineering-devops/blob/master/0x17-web_stack_debugging_3/0-strace_is_your_friend.pp)
-to automate fixing of any such identitical errors should they occur in the future. The manifest
-replaces any `phpp` extensions in the file `/var/www/html/wp-settings.php` with `php`.
-
-But of course, it will never occur again, because we're programmers, and we never make
-errors! :wink:
+While we strive for error-free programming, the creation of these measures ensures readiness to handle potential issues. 😉
