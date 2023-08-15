@@ -23,7 +23,7 @@ Upstart script to keep the application running on server reboots.
 
 
 
-```markdown
+   ```markdown
        # Flask App Deployment with Nginx
        
        This guide explains how to deploy a Flask web application using Nginx as a reverse proxy server. This setup will enable your Flask app to be accessible via a specific route and port, and Nginx will handle the communication between the internet and your app.
@@ -36,7 +36,7 @@ Upstart script to keep the application running on server reboots.
        
           ```bash
           sudo nano /etc/nginx/sites-available/2-app_server-nginx_config
-   ```
+     ```
 
 3. Add the following Nginx configuration to the file. Replace `your_domain_or_ip` with your actual domain name or IP address:
 
