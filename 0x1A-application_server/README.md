@@ -95,18 +95,18 @@ Upstart script to keep the application running on server reboots.
      
      ## Access Your App
      
-        Your Flask app is now accessible at `http://your_domain_or_ip/airbnb-onepage/`.
-        
-        ## Testing Locally (Optional)
-        
-        To test the deployment locally, you might need to modify your computer's hosts file to point the domain to your server's IP address.
-        
-        - On most systems, the hosts file is located at `/etc/hosts`.
-        
-        **Note**: Ensure your server's firewall allows traffic on port 80 and consider using SSL certificates for security.
-        
-        
-        Remember to replace `your_domain_or_ip` with your actual domain name or IP address.
+     Your Flask app is now accessible at `http://your_domain_or_ip/airbnb-onepage/`.
+     
+     ## Testing Locally (Optional)
+     
+     To test the deployment locally, you might need to modify your computer's hosts file to point the domain to your server's IP address.
+     
+     - On most systems, the hosts file is located at `/etc/hosts`.
+     
+     **Note**: Ensure your server's firewall allows traffic on port 80 and consider using SSL certificates for security.
+     
+     
+     Remember to replace `your_domain_or_ip` with your actual domain name or IP address.
 
 * **3. Add a route with query parameters**
   * [3-app_server-nginx_config](./3-app_server-nginx_config): Nginx configuration file
