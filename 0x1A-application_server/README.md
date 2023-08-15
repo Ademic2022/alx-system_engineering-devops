@@ -41,22 +41,32 @@ This guide explains how to deploy a Flask web application using Nginx as a rever
 3. Add the following Nginx configuration to the file. Replace `your_domain_or_ip` with your actual domain name or IP address:
 
    ```nginx
-   server {
-       listen 80;
-       server_name your_domain_or_ip;
+   # Configures Nginx to serve the route /airbnb-onepage/ from AirBnB_clone_v2.
 
-       location /airbnb-onepage/ {
-           proxy_pass http://127.0.0.1:5000;
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-       }
-
-       location / {
-           proxy_pass http://127.0.0.1:5000;  # Default route if needed
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-       }
-   }
+    server {
+            # Listen on port 80
+            listen 80;
+        
+            # Use IP of server as domain name
+            server_name 54.173.35.118;  # Replace with your actual domain or IP address
+    
+            # Customize HTTP response header
+            add_header  X-Served-By 213221-web-01;
+    
+            # Serve /airbnb-onepage/ route from AirBnB_clone_v2
+            location /airbnb-onepage/ {
+                    proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+                    # proxy_set_header Host $host;
+                    # proxy_set_header X-Real-IP $remote_addr;
+                    # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            }
+            # 404 error page
+            error_page 404 /404.html;
+            location /404 {
+                    root /var/www/html;
+                    internal;
+            }
+    }
    ```
 
    Press `Ctrl + O` to save the file and `Ctrl + X` to exit.
