@@ -38,7 +38,7 @@ Upstart script to keep the application running on server reboots.
           sudo nano /etc/nginx/sites-available/2-app_server-nginx_config
      ```
 
-3. Add the following Nginx configuration to the file. Replace `your_domain_or_ip` with your actual domain name or IP address:
+     Add the following Nginx configuration to the file. Replace `your_domain_or_ip` with your actual domain name or IP address:
 
    ```nginx
    # Configures Nginx to serve the route /airbnb-onepage/ from AirBnB_clone_v2.
@@ -71,7 +71,7 @@ Upstart script to keep the application running on server reboots.
 
    Press `Ctrl + O` to save the file and `Ctrl + X` to exit.
 
-     ## Step 4: Enable the Nginx Configuration
+     ## Enable the Nginx Configuration
      
      1. Create a symbolic link to enable the Nginx site configuration:
      
@@ -79,7 +79,7 @@ Upstart script to keep the application running on server reboots.
         sudo ln -s /etc/nginx/sites-available/2-app_server-nginx_config /etc/nginx/sites-enabled/
         ```
      
-     ## Step 5: Test and Restart Nginx
+     ## Test and Restart Nginx
      
      1. Test the Nginx configuration for syntax errors:
      
@@ -93,11 +93,11 @@ Upstart script to keep the application running on server reboots.
         sudo systemctl restart nginx
         ```
      
-     ## Step 6: Access Your App
+     ## Access Your App
      
      Your Flask app is now accessible at `http://your_domain_or_ip/airbnb-onepage/`.
      
-     ## Step 7: Testing Locally (Optional)
+     ## Testing Locally (Optional)
      
      To test the deployment locally, you might need to modify your computer's hosts file to point the domain to your server's IP address.
      
