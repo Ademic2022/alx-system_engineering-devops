@@ -71,44 +71,42 @@ Upstart script to keep the application running on server reboots.
 
    Press `Ctrl + O` to save the file and `Ctrl + X` to exit.
 
-## Step 4: Enable the Nginx Configuration
-
-1. Create a symbolic link to enable the Nginx site configuration:
-
-   ```bash
-   sudo ln -s /etc/nginx/sites-available/2-app_server-nginx_config /etc/nginx/sites-enabled/
-   ```
-
-## Step 5: Test and Restart Nginx
-
-1. Test the Nginx configuration for syntax errors:
-
-   ```bash
-   sudo nginx -t
-   ```
-
-2. If the test is successful, restart Nginx:
-
-   ```bash
-   sudo systemctl restart nginx
-   ```
-
-## Step 6: Access Your App
-
-Your Flask app is now accessible at `http://your_domain_or_ip/airbnb-onepage/`.
-
-## Step 7: Testing Locally (Optional)
-
-To test the deployment locally, you might need to modify your computer's hosts file to point the domain to your server's IP address.
-
-- On most systems, the hosts file is located at `/etc/hosts`.
-
-**Note**: Ensure your server's firewall allows traffic on port 80 and consider using SSL certificates for security.
-
-
-Remember to replace `your_domain_or_ip` with your actual domain name or IP address.
-
-Please note that this is a basic README and you should customize it according to your application's specifics and any additional steps you might need for your deployment.
+     ## Step 4: Enable the Nginx Configuration
+     
+     1. Create a symbolic link to enable the Nginx site configuration:
+     
+        ```bash
+        sudo ln -s /etc/nginx/sites-available/2-app_server-nginx_config /etc/nginx/sites-enabled/
+        ```
+     
+     ## Step 5: Test and Restart Nginx
+     
+     1. Test the Nginx configuration for syntax errors:
+     
+        ```bash
+        sudo nginx -t
+        ```
+     
+     2. If the test is successful, restart Nginx:
+     
+        ```bash
+        sudo systemctl restart nginx
+        ```
+     
+     ## Step 6: Access Your App
+     
+     Your Flask app is now accessible at `http://your_domain_or_ip/airbnb-onepage/`.
+     
+     ## Step 7: Testing Locally (Optional)
+     
+     To test the deployment locally, you might need to modify your computer's hosts file to point the domain to your server's IP address.
+     
+     - On most systems, the hosts file is located at `/etc/hosts`.
+     
+     **Note**: Ensure your server's firewall allows traffic on port 80 and consider using SSL certificates for security.
+     
+     
+     Remember to replace `your_domain_or_ip` with your actual domain name or IP address.
 
 * **3. Add a route with query parameters**
   * [3-app_server-nginx_config](./3-app_server-nginx_config): Nginx configuration file
