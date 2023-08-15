@@ -21,6 +21,86 @@ Upstart script to keep the application running on server reboots.
   proxying requests on the route `/airbnb-onepage/` to the Gunicorn app running on
   port `5000`.
 
+
+
+```markdown
+# Flask App Deployment with Nginx
+
+This guide explains how to deploy a Flask web application using Nginx as a reverse proxy server. This setup will enable your Flask app to be accessible via a specific route and port, and Nginx will handle the communication between the internet and your app.
+
+## Step 3: Create Nginx Configuration
+
+1. Navigate to your server's terminal.
+
+2. Create a new Nginx configuration file using the following command:
+
+   ```bash
+   sudo nano /etc/nginx/sites-available/2-app_server-nginx_config
+   ```
+
+3. Add the following Nginx configuration to the file. Replace `your_domain_or_ip` with your actual domain name or IP address:
+
+   ```nginx
+   server {
+       listen 80;
+       server_name your_domain_or_ip;
+
+       location /airbnb-onepage/ {
+           proxy_pass http://127.0.0.1:5000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+       }
+
+       location / {
+           proxy_pass http://127.0.0.1:5000;  # Default route if needed
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+       }
+   }
+   ```
+
+   Press `Ctrl + O` to save the file and `Ctrl + X` to exit.
+
+## Step 4: Enable the Nginx Configuration
+
+1. Create a symbolic link to enable the Nginx site configuration:
+
+   ```bash
+   sudo ln -s /etc/nginx/sites-available/2-app_server-nginx_config /etc/nginx/sites-enabled/
+   ```
+
+## Step 5: Test and Restart Nginx
+
+1. Test the Nginx configuration for syntax errors:
+
+   ```bash
+   sudo nginx -t
+   ```
+
+2. If the test is successful, restart Nginx:
+
+   ```bash
+   sudo systemctl restart nginx
+   ```
+
+## Step 6: Access Your App
+
+Your Flask app is now accessible at `http://your_domain_or_ip/airbnb-onepage/`.
+
+## Step 7: Testing Locally (Optional)
+
+To test the deployment locally, you might need to modify your computer's hosts file to point the domain to your server's IP address.
+
+- On most systems, the hosts file is located at `/etc/hosts`.
+
+**Note**: Ensure your server's firewall allows traffic on port 80 and consider using SSL certificates for security.
+
+```
+
+Remember to replace `your_domain_or_ip` with your actual domain name or IP address.
+
+Please note that this is a basic README and you should customize it according to your application's specifics and any additional steps you might need for your deployment.
+
 * **3. Add a route with query parameters**
   * [3-app_server-nginx_config](./3-app_server-nginx_config): Nginx configuration file
   proxying requests on the route `/airbnb-dynamic/number_odd_or_even/<int: num>` to the
