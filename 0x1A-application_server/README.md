@@ -95,7 +95,6 @@ To test the deployment locally, you might need to modify your computer's hosts f
 
 **Note**: Ensure your server's firewall allows traffic on port 80 and consider using SSL certificates for security.
 
-```
 
 Remember to replace `your_domain_or_ip` with your actual domain name or IP address.
 
